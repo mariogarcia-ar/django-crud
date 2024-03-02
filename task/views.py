@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 # from . import forms 
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
 from django.contrib.auth.models import User
 from . import models
 
@@ -11,7 +12,8 @@ def home(request):
     })
     
 def tasks(request):
-    tasks = models.Task.objects.all()
+    # tasks = models.Task.objects.all()
+    tasks = models.Task.objects.filter(user=request.user)
     return render(request, "tasks.html",{
         "tasks": tasks
     })
@@ -24,7 +26,11 @@ def signup(request):
             user = User.objects.create_user(username=request.POST['username'],
                                      password=request.POST['password1'])   
             user.save()
-            return redirect('home')
+            
+            # session login
+            login(request, user)
+
+            return redirect('tasks')
 
     return render(request, "signup.html",{
         "form": UserCreationForm(),
