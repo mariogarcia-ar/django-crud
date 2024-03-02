@@ -6,4 +6,5 @@ urlpatterns = [
     path("signup/", views.signup , name="signup"),
     # path("login/", views.login , name="login"),
     path("tasks/", views.tasks , name="tasks"),
+    path("create_task/", views.create_task , name="create_task"),
 ]

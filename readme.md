@@ -9,6 +9,11 @@ python manage.py makemigrations
 python manage.py migrate 
  python manage.py createsuperuser
 
+Remove the migration history for each app.
+
+python manage.py migrate --fake task zero
+python manage.py flush
+
 
 Pagina signup
     route

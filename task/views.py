@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-# from . import forms 
+from . import forms 
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.models import User
@@ -14,10 +14,24 @@ def home(request):
 def tasks(request):
     # tasks = models.Task.objects.all()
     tasks = models.Task.objects.filter(user=request.user)
-    return render(request, "tasks.html",{
+    return render(request, "tasks/tasks.html",{
         "tasks": tasks
     })
 
+def create_task(request):
+    if request.method == "POST":
+        print('procesar create_task', request.POST)
+        
+        task = models.Task.objects.create(title=request.POST['title'],
+                                        description=request.POST['description'],
+                                        user=request.user)
+        task.save()
+
+        return redirect('tasks')
+            
+    return render(request, "tasks/create_task.html",{
+        "form": forms.CreateTaskForm()
+    })
 
 def signup(request):
     if request.method == "POST":
