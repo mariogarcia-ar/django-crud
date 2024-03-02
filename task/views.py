@@ -40,7 +40,7 @@ def signout(request):
 @login_required    
 def tasks(request):
     # tasks = models.Task.objects.all()
-    tasks = models.Task.objects.filter(user=request.user)
+    tasks = models.Task.objects.filter(user=request.user, datecompleted__isnull=True)
     return render(request, "tasks/tasks.html",{
         "tasks": tasks
     })
