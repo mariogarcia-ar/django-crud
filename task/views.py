@@ -1,8 +1,11 @@
 from django.shortcuts import render, redirect
-from . import forms 
+
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+
+from . import forms 
 from . import models
 
 # Create your views here.
@@ -11,6 +14,17 @@ def home(request):
         # "form": UserCreationForm()
     })
     
+def login(request):
+    return render(request, "login.html",{
+        # "form": UserCreationForm()
+    })
+
+def logout(request):
+    return render(request, "logout.html",{
+        # "form": UserCreationForm()
+    })
+    
+@login_required    
 def tasks(request):
     # tasks = models.Task.objects.all()
     tasks = models.Task.objects.filter(user=request.user)
@@ -18,6 +32,7 @@ def tasks(request):
         "tasks": tasks
     })
 
+@login_required    
 def create_task(request):
     if request.method == "POST":
         print('procesar create_task', request.POST)
