@@ -1,6 +1,14 @@
 {% extends 'layout/base.html' %}
 
 {% block content %}
- <h1>LogIn</h1>
+<div class="error">
+    {{ error }}
+</div>
+
+<form action="{% url 'login' %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p}}
+    <button type="submit">SignIn</button>
+</form>   
 
 {% endblock %} 

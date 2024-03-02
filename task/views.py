@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import login, logout
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
@@ -14,9 +14,23 @@ def home(request):
         # "form": UserCreationForm()
     })
     
-def login(request):
+def signin(request):
+    error = ""
+
+    if request.method == "POST":
+        print('procesar signin', request.POST)
+        
+        user = authenticate(request, username=request.POST['username'],
+                                     password=request.POST['password'],)
+        if user :
+            login(request, user)
+            return redirect('tasks')
+        else:
+            error = "User or Password Incorrect"
+        
     return render(request, "login.html",{
-        # "form": UserCreationForm()
+        "form": AuthenticationForm(),
+        "error": error
     })
 
 def signout(request):
