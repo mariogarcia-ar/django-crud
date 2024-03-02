@@ -8,7 +8,12 @@
     <link rel="stylesheet" href="{% static 'main.css'%}">
 </head>
 <body>
-
+<nav>
+    <ul>
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'signup' %}">SignUp</a></li>
+    </ul>
+</nav>
     {% block content %}
         
     {% endblock %}
