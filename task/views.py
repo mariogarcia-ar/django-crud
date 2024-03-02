@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 # from . import forms 
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from . import models
 
 # Create your views here.
 def home(request):
@@ -9,6 +10,13 @@ def home(request):
         # "form": UserCreationForm()
     })
     
+def tasks(request):
+    tasks = models.Task.objects.all()
+    return render(request, "tasks.html",{
+        "tasks": tasks
+    })
+
+
 def signup(request):
     if request.method == "POST":
         print('procesar', request.POST)
