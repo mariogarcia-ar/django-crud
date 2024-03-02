@@ -19,6 +19,7 @@ def signup(request):
             return redirect('home')
 
     return render(request, "signup.html",{
-        "form": UserCreationForm()
+        "form": UserCreationForm(),
+        "error": "An error to be showed"
     })
 

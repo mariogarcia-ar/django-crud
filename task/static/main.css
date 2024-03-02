@@ -1,3 +1,7 @@
 body{
     background-color: antiquewhite;
 }
+
+.error{
+    background-color: rgb(226, 133, 133);
+}
