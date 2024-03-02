@@ -50,15 +50,19 @@ def create_task(request):
     if request.method == "POST":
         print('procesar create_task', request.POST)
         
-        task = models.Task.objects.create(title=request.POST['title'],
-                                        description=request.POST['description'],
-                                        user=request.user)
+        # task = models.Task.objects.create(title=request.POST['title'],
+        #                                 description=request.POST['description'],
+        #                                 user=request.user)
+        # task.save()
+        form = forms.TaskForm(request.POST)
+        task = form.save(commit=False) # waiting for user
+        task.user = request.user 
         task.save()
 
         return redirect('tasks')
             
     return render(request, "tasks/create_task.html",{
-        "form": forms.CreateTaskForm()
+        "form": forms.TaskForm()
     })
 
 def signup(request):
